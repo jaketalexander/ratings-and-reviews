@@ -11,7 +11,7 @@ const connectDB = async () => {
       port: process.env.PORT
     })
     await pool.connect()
-    console.log("Connected")
+    console.log("Connected to DB")
   } catch (error) {
     console.log(error)
   }
