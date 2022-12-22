@@ -1,9 +1,5 @@
 -- CREATE DATABASE ratingsandreviews
 
-DROP TABLE IF EXISTS reviews CASCADE;
-DROP TABLE IF EXISTS photos CASCADE;
-DROP TABLE IF EXISTS characteristics CASCADE;
-DROP TABLE IF EXISTS reviewcharacteristics CASCADE;
 --Create Reviews Table
 CREATE TABLE reviews (
   review_id SERIAL PRIMARY KEY,
@@ -34,7 +30,7 @@ CREATE TABLE photos (
   FOREIGN KEY (review_id) REFERENCES reviews(review_id)
 );
 
---Load Photos
+--Load Photos Table
 COPY photos
 FROM '/Users/jakealexander/Documents/reviewdata/reviews_photos.csv'
 DELIMITER ','
@@ -63,6 +59,7 @@ CREATE TABLE reviewcharacteristics (
   FOREIGN KEY (review_id) REFERENCES reviews(review_id)
 );
 
+-- Load Review Characteristics Table
 COPY reviewcharacteristics
 FROM '/Users/jakealexander/Documents/reviewdata/characteristic_reviews.csv'
 DELIMITER ','
