@@ -1,18 +1,27 @@
-const express = require('express')
-const app = express()
-const port = 3000
-const db = require('./db/index.js')
+const express = require('express');
+const db = require('./db');
+
+// Middleware
 const logger = require('./middleware/logger.js');
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+const app = express();
+module.exports.app = app;
+
+const port = 3000;
+
+// Router
+var router = require('./routes.js');
+
+//Parsers
 app.use(logger);
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
+// Send Routes
+app.use(router)
 
-app.get('/', (request, response) => {
-  response.json({ info: 'Node.js, Express, and Postgres API' })
-})
+// app.use(express.static(__dirname + '/../client'));
 
 app.listen(port, () => {
-  console.log(`App running on port ${port}.`)
+  console.log(`App running on port ${port}.`);
 })

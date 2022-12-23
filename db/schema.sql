@@ -1,6 +1,6 @@
 -- CREATE DATABASE ratingsandreviews
 
---Create Reviews Table
+-- Create Reviews Table
 CREATE TABLE reviews (
   review_id SERIAL PRIMARY KEY,
   product_id INT,
@@ -16,13 +16,13 @@ CREATE TABLE reviews (
   helpfulness INT
 );
 
---Load Reviews
+-- Load Reviews
 COPY reviews
 FROM '/Users/jakealexander/Documents/reviewdata/reviews.csv'
 DELIMITER ','
 CSV HEADER;
 
---Create Photos Table
+-- Create Photos Table
 CREATE TABLE photos (
   id SERIAL PRIMARY KEY,
   review_id INT,
@@ -30,26 +30,26 @@ CREATE TABLE photos (
   FOREIGN KEY (review_id) REFERENCES reviews(review_id)
 );
 
---Load Photos Table
+-- oad Photos Table
 COPY photos
 FROM '/Users/jakealexander/Documents/reviewdata/reviews_photos.csv'
 DELIMITER ','
 CSV HEADER;
 
---Create Characteristics Table
+-- Create Characteristics Table
 CREATE TABLE characteristics (
   characteristic_id SERIAL PRIMARY KEY,
   product_id INT,
   name VARCHAR(25)
 );
 
---Load Characteristics Table
+-- Load Characteristics Table
 COPY characteristics
 FROM '/Users/jakealexander/Documents/reviewdata/characteristics.csv'
 DELIMITER ','
 CSV HEADER;
 
---Creates Review Characteristics Table
+-- Creates Review Characteristics Table
 CREATE TABLE reviewcharacteristics (
   id SERIAL PRIMARY KEY,
   characteristic_id INT,
