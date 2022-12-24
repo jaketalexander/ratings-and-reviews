@@ -20,7 +20,8 @@ CREATE TABLE reviews (
 COPY reviews
 FROM '/Users/jakealexander/Documents/reviewdata/reviews.csv'
 DELIMITER ','
-CSV HEADER;
+CSV HEADER
+NULL AS 'null';
 
 -- Create Photos Table
 CREATE TABLE photos (

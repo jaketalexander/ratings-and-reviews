@@ -2,7 +2,7 @@ const express = require('express');
 const db = require('./db');
 
 // Middleware
-const logger = require('./middleware/logger.js');
+var morgan = require('morgan')
 
 const app = express();
 module.exports.app = app;
@@ -13,7 +13,7 @@ const port = 3000;
 var router = require('./routes.js');
 
 //Parsers
-app.use(logger);
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 

@@ -2,12 +2,12 @@ var models = require('../models');
 
 module.exports = {
   get: function (req, res) {
-    models.reviews.getReviews(function(err, results) {
+    models.reviews.getReviews(req.params, function(err, results) {
       if (err) {
         console.error('Unable to retrieve from the database: ', err);
         res.sendStatus(500);
       } else {
-        res.json(results);
+        res.json(results.rows);
       }
     });
   },
@@ -23,22 +23,22 @@ module.exports = {
     });
   },
   helpful: function (req, res) {
-    models.reviews.helpful(function(err, results) {
+    models.reviews.helpful(req.params.review_id, function(err, results) {
       if (err) {
         console.error('Unable to retrieve from the database: ', err);
         res.sendStatus(500);
       } else {
-        res.json(results);
+        res.sendStatus(200);
       }
     });
   },
   report: function (req, res) {
-    models.reviews.report(function(err, results) {
+    models.reviews.report(req.params.review_id, function(err, results) {
       if (err) {
-        console.error('Unable to retrieve from the database: ', err);
+        console.error('Unable to report: ', err);
         res.sendStatus(500);
       } else {
-        res.json(results);
+        res.sendStatus(200);
       }
     });
   },
