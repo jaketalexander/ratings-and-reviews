@@ -4,10 +4,9 @@ module.exports = {
   getReviews: function (params, callback) {
     let count = params.count || 5;
     let offset = params.page || 0;
-    var queryStr = `select * from reviews where product_id = ${params.product_id} limit ${count} offset ${offset}`;
-    console.time()
+    const queryStr = `select * from reviews where product_id = ${params.product_id} limit ${count} offset ${offset}`;
+
     db.query(queryStr, function(err, results) {
-      console.timeEnd()
       callback(err, results);
     });
   },

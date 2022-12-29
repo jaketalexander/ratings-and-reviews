@@ -1,5 +1,11 @@
 -- CREATE DATABASE ratingsandreviews
 
+DROP TABLE IF EXISTS reviews CASCADE;
+DROP TABLE IF EXISTS photos CASCADE;
+DROP TABLE IF EXISTS characteristics CASCADE;
+DROP TABLE IF EXISTS reviewcharacteristics CASCADE;
+
+
 -- Create Reviews Table
 CREATE TABLE reviews (
   review_id SERIAL PRIMARY KEY,

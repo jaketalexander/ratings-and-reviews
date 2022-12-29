@@ -7,7 +7,13 @@ module.exports = {
         console.error('Unable to retrieve from the database: ', err);
         res.sendStatus(500);
       } else {
-        res.json(results.rows);
+        let result = {
+          product: req.params.product_id,
+          page: req.params.page || 0,
+          count: req.params.count || 5,
+          results: results.rows,
+        }
+        res.json(result);
       }
     });
   },
