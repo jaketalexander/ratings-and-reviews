@@ -7,24 +7,17 @@ module.exports = {
         console.error('Unable to retrieve from the database: ', err);
         res.sendStatus(500);
       } else {
-        let result = {
-          product: req.params.product_id,
-          page: req.params.page || 0,
-          count: req.params.count || 5,
-          results: results.rows,
-        }
-        res.json(result);
+        res.status(200).send(results);
       }
     });
   },
   post: function (req, res) {
-    var params = [req.body];
-    models.reviews.post(function(err, results) {
+    models.reviews.post(req, function(err, results) {
       if (err) {
         console.error('Unable to retrieve from the database: ', err);
         res.sendStatus(500);
       } else {
-        res.json(results);
+        res.sendStatus(200);
       }
     });
   },

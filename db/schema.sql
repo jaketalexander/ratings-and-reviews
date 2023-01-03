@@ -4,6 +4,9 @@ DROP TABLE IF EXISTS reviews CASCADE;
 DROP TABLE IF EXISTS photos CASCADE;
 DROP TABLE IF EXISTS characteristics CASCADE;
 DROP TABLE IF EXISTS reviewcharacteristics CASCADE;
+-- DROP TABLE IF EXISTS ratings CASCADE;
+-- DROP TABLE IF EXISTS recommended CASCADE;
+-- DROP TABLE IF EXISTS agg_characteristics CASCADE;
 
 
 -- Create Reviews Table
@@ -18,7 +21,7 @@ CREATE TABLE reviews (
   reported BOOLEAN,
   username VARCHAR(50),
   email VARCHAR(200),
-  response VARCHAR(1000),
+  response VARCHAR(1000) DEFAULT NULL,
   helpfulness INT
 );
 
@@ -37,7 +40,7 @@ CREATE TABLE photos (
   FOREIGN KEY (review_id) REFERENCES reviews(review_id)
 );
 
--- oad Photos Table
+-- Load Photos Table
 COPY photos
 FROM '/Users/jakealexander/Documents/reviewdata/reviews_photos.csv'
 DELIMITER ','
@@ -71,3 +74,7 @@ COPY reviewcharacteristics
 FROM '/Users/jakealexander/Documents/reviewdata/characteristic_reviews.csv'
 DELIMITER ','
 CSV HEADER;
+
+SELECT SETVAL('reviews_review_id_seq', (SELECT MAX(review_id) FROM reviews));
+SELECT SETVAL('photos_id_seq', (SELECT MAX(id) FROM photos));
+SELECT SETVAL('reviewcharacteristics_id_seq', (SELECT MAX(id) FROM reviewcharacteristics));
