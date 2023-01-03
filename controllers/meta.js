@@ -7,7 +7,7 @@ module.exports = {
         console.error('Unable to retrieve from the database: ', err);
         res.sendStatus(500);
       } else {
-        res.json(results.rows);
+        res.json(results);
       }
     });
   },
