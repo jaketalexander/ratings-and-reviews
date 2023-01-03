@@ -2,7 +2,6 @@ var db = require('../db');
 
 module.exports = {
   getMeta: function (id, callback) {
-    console.log('inside models getMeta', id);
     const query = `SELECT count(*) FILTER (WHERE product_id = ${id.product_id} AND recommend) FROM reviews`;
 
     const metaObj = {};
@@ -31,7 +30,6 @@ module.exports = {
           acc += Number(value);
           return acc;
         }, 0);
-        console.log('total ', total);
         db.query(`SELECT count(*) FILTER (WHERE product_id = ${id.product_id} AND recommend) FROM reviews`)
           .then(res => {
             metaObj.recommended.true = parseInt(res.rows[0].count);
@@ -39,10 +37,8 @@ module.exports = {
             db.query(`SELECT characteristic_id, name FROM characteristics WHERE product_id = ${id.product_id}`)
               .then(res => {
                 Promise.all(res.rows.map(char => {
-                  console.log('char', char)
                   return db.query(`SELECT value FROM reviewcharacteristics WHERE characteristic_id = ${char.characteristic_id}`)
                     .then(res => {
-                      console.log('inner inner loop values?', res.rows);
                       const average = res.rows.reduce((acc, value) => {
                         acc += value.value;
                         return acc;
