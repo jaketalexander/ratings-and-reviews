@@ -47,9 +47,13 @@ module.exports = {
     const { product_id, rating, summary, body, recommend, name, email, photos, characteristics } = req.body;
     const date = Date.now();
     const photosString = JSON.stringify(photos).split('\"').join('\'');
-    const characteristic_ids = JSON.stringify(Object.keys(characteristics)).split('\"').join('');
-    const characteristic_values = JSON.stringify(Object.values(characteristics));
-
+    const characteristic = Object.values(characteristics).reduce((acc, item) => {
+      acc.ids.push(item.id);
+      acc.values.push(Number(item.value));
+      return acc;
+    }, {ids:[], values:[]})
+    // const characteristic_values = JSON.stringify(Object.values(characteristics));
+    console.log(characteristic)
     const queryReviewStirng = `
       INSERT INTO reviews(product_id, rating, date, summary, body, recommend, username, email)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -57,31 +61,35 @@ module.exports = {
     const queryReviewArgs = [product_id, rating, date, summary, body, recommend, name, email];
     db
       .query(queryReviewStirng, queryReviewArgs)
-      .then(results => {
+      .then((results) => {
         const { review_id } = results.rows[0];
         const queryPhotoStirng = `INSERT INTO photos(review_id, photo_url) VALUES ($1, unnest(ARRAY ${photosString}))`;
         const queryPhotoArgs = [review_id];
         db
           .query(queryPhotoStirng, queryPhotoArgs)
-          .catch(err => callback(err))
+          .catch((err) => callback(err))
 
         const queryCharString = `
           INSERT INTO reviewcharacteristics(characteristic_id, review_id, value)
-          VALUES(unnest(ARRAY ${characteristic_ids}), $1, unnest(ARRAY ${characteristic_values}))`;
+          VALUES(unnest(ARRAY ${JSON.stringify(characteristic.ids)}), $1, unnest(ARRAY ${JSON.stringify(characteristic.values)}))`;
+        // const queryCharString = `
+        //   INSERT INTO reviewcharacteristics(characteristic_id, review_id, value)
+        //   VALUES(${characteristic.ids[0]}, $1, ${characteristic.values[0]})
+        // `;
         const queryCharArgs = [review_id];
         db
           .query(queryCharString, queryCharArgs)
-          .catch(err => callback(err))
+          .catch((err) => callback(err))
       })
       .then((result) => callback(null, result))
-    .catch(err => callback(err))
+      .catch((err) => callback(err))
   },
   helpful: function (id, callback) {
     const queryStr = `UPDATE reviews SET helpfulness = helpfulness + 1 WHERE review_id = ${id}`;
     db
-    .query(queryStr, function(err, results) {
-      callback(err, results);
-    });
+      .query(queryStr, function(err, results) {
+        callback(err, results);
+      });
   },
   report: function (id, callback) {
     const queryStr = `UPDATE reviews SET reported = true WHERE review_id = ${id}`;

@@ -14,10 +14,10 @@ module.exports = {
   post: function (req, res) {
     models.reviews.post(req, function(err, results) {
       if (err) {
-        console.error('Unable to retrieve from the database: ', err);
+        console.error('Unable to post. Please try again: ', err);
         res.sendStatus(500);
       } else {
-        res.sendStatus(200);
+        res.sendStatus(201);
       }
     });
   },
@@ -27,7 +27,7 @@ module.exports = {
         console.error('Unable to retrieve from the database: ', err);
         res.sendStatus(500);
       } else {
-        res.sendStatus(200);
+        res.sendStatus(204);
       }
     });
   },
@@ -37,7 +37,7 @@ module.exports = {
         console.error('Unable to report: ', err);
         res.sendStatus(500);
       } else {
-        res.sendStatus(200);
+        res.sendStatus(204);
       }
     });
   },

@@ -4,10 +4,6 @@ DROP TABLE IF EXISTS reviews CASCADE;
 DROP TABLE IF EXISTS photos CASCADE;
 DROP TABLE IF EXISTS characteristics CASCADE;
 DROP TABLE IF EXISTS reviewcharacteristics CASCADE;
--- DROP TABLE IF EXISTS ratings CASCADE;
--- DROP TABLE IF EXISTS recommended CASCADE;
--- DROP TABLE IF EXISTS agg_characteristics CASCADE;
-
 
 -- Create Reviews Table
 CREATE TABLE reviews (
@@ -78,3 +74,9 @@ CSV HEADER;
 SELECT SETVAL('reviews_review_id_seq', (SELECT MAX(review_id) FROM reviews));
 SELECT SETVAL('photos_id_seq', (SELECT MAX(id) FROM photos));
 SELECT SETVAL('reviewcharacteristics_id_seq', (SELECT MAX(id) FROM reviewcharacteristics));
+
+CREATE INDEX reviews_product_id_index ON reviews (product_id);
+CREATE INDEX photos_review_id_index ON photos (review_id);
+-- CREATE INDEX characteristics_characteristic_id_index ON characteristics (characteristic_id);
+-- CREATE INDEX revcharacteristics_characteristic_id_index ON reviewcharacteristics (characteristic_id);
+-- CREATE INDEX name_index ON characteristics (name);
