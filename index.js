@@ -5,7 +5,7 @@ const db = require('./db');
 var morgan = require('morgan')
 
 const app = express();
-module.exports.app = app;
+// module.exports.app = app;
 
 const port = 3000;
 

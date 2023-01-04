@@ -7,18 +7,17 @@ module.exports = {
         console.error('Unable to retrieve from the database: ', err);
         res.sendStatus(500);
       } else {
-        res.json(results.rows);
+        res.status(200).send(results);
       }
     });
   },
   post: function (req, res) {
-    var params = [req.body];
-    models.reviews.post(function(err, results) {
+    models.reviews.post(req, function(err, results) {
       if (err) {
-        console.error('Unable to retrieve from the database: ', err);
+        console.error('Unable to post. Please try again: ', err);
         res.sendStatus(500);
       } else {
-        res.json(results);
+        res.sendStatus(201);
       }
     });
   },
@@ -28,7 +27,7 @@ module.exports = {
         console.error('Unable to retrieve from the database: ', err);
         res.sendStatus(500);
       } else {
-        res.sendStatus(200);
+        res.sendStatus(204);
       }
     });
   },
@@ -38,7 +37,7 @@ module.exports = {
         console.error('Unable to report: ', err);
         res.sendStatus(500);
       } else {
-        res.sendStatus(200);
+        res.sendStatus(204);
       }
     });
   },

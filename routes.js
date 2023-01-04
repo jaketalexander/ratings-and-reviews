@@ -1,9 +1,9 @@
 var controller = require('./controllers');
 var router = require('express').Router();
 
-router.get('/reviews/:product_id/:page?/:count?/:sort?', controller.reviews.get);
-
 router.get('/reviews/meta/:product_id', controller.meta.get);
+
+router.get('/reviews/:product_id/:page?/:count?/:sort?', controller.reviews.get);
 
 router.post('/reviews', controller.reviews.post);
 
