@@ -11,4 +11,6 @@ router.put('/reviews/:review_id/helpful', controller.reviews.helpful);
 
 router.put('/reviews/:review_id/report', controller.reviews.report);
 
+router.get('/loaderio-5dcdf417719abd0b18c776b964f9a420', (req, res) => res.send('loaderio-5dcdf417719abd0b18c776b964f9a420'));
+
 module.exports = router;
