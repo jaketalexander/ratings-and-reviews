@@ -80,3 +80,8 @@ CREATE INDEX photos_review_id_index ON photos (review_id);
 -- CREATE INDEX characteristics_characteristic_id_index ON characteristics (characteristic_id);
 -- CREATE INDEX revcharacteristics_characteristic_id_index ON reviewcharacteristics (characteristic_id);
 -- CREATE INDEX name_index ON characteristics (name);
+
+
+SELECT SETVAL('questions_id_seq', (SELECT MAX(id) FROM questions));
+SELECT SETVAL('answers_id_seq', (SELECT MAX(id) FROM answers));
+SELECT SETVAL('photos_id_seq', (SELECT MAX(id) FROM photos));
