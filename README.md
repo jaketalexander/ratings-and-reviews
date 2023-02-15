@@ -35,7 +35,7 @@ This microservice was then deployed with the following configuration:
 This configuration was stress tested with LoaderIO and K6, resulting with the following stats from one of the tests:
 
 - 60,000 requests/minute
-- 66ms average request duration
+- 8ms average request duration
 - 0% error rate
 
 ---
